@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gestor de Actividades</title>
+  <style>
+    .completada {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gestor de Actividades</h1>
+  <form id="formulario">
+    <input type="text" id="actividad" placeholder="Ingresa una actividad" required>
+    <input type="text" id="descripcion" placeholder="Ingresa una descripcion" required>
+    <select id="estado">
+      <option value="inicio">Inicio</option>
+      <option value="proceso">En Proceso</option>
+      <option value="terminada">Terminada</option>
+    </select>
+    <button type="submit">Agregar Actividad</button>
+  </form>
+  <ul id="listaActividades"></ul>
+
+  <script>
+    const formulario = document.getElementById('formulario');
+    const listaActividades = document.getElementById('listaActividades');
+
+    let actividades = JSON.parse(localStorage.getItem('actividades')) || [];
+
+    function renderizarActividades() {
+      listaActividades.innerHTML = '';
+      actividades.forEach((actividad, index) => {
+        const li = document.createElement('li');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = actividad.estado === 'terminada';
+        checkbox.addEventListener('change', () => {
+          cambiarEstado(index);
+        });
+
+        const span = document.createElement('span');
+        span.textContent = `${actividad.nombre} ${actividad.descripcion} (${actividad.fecha}) - ${actividad.estado}`;
+
+        if (actividad.estado === 'terminada') {
+          span.classList.add('completada');
+        }
+
+        li.appendChild(checkbox);
+        li.appendChild(span);
+        listaActividades.appendChild(li);
+      });
+    }
+
+    function agregarActividad(evento) {
+      evento.preventDefault();
+      const actividad = document.getElementById('actividad').value.trim();
+      const descripcion = document.getElementById('descripcion').value.trim();
+      const estado = document.getElementById('estado').value;
+      const fecha = new Date().toLocaleString();
+
+      if (actividad !== '') {
+        actividades.push({ nombre: actividad, descripcion, estado, fecha });
+        localStorage.setItem('actividades', JSON.stringify(actividades));
+        document.getElementById('actividad').value = '';
+        document.getElementById('descripcion').value = '';
+        renderizarActividades();
+      }
+    }
+
+    function cambiarEstado(index) {
+      const actividad = actividades[index];
+      if (actividad.estado === 'inicio') {
+        actividad.estado = 'proceso';
+      } else if (actividad.estado === 'proceso') {
+        actividad.estado = 'terminada';
+      } else {
+        actividad.estado = 'inicio';
+      }
+      localStorage.setItem('actividades', JSON.stringify(actividades));
+      renderizarActividades();
+    }
+
+    formulario.addEventListener('submit', agregarActividad);
+    renderizarActividades();
+  </script>
+</body>
+</html>

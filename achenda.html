@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Agenda</title>
+
+    <style>
+
+ 
+
+body {
+
+  font-family: 'Roboto', sans-serif;
+
+  color: rgba(0, 0, 0, 0.87);
+
+  background-color: #fafafa;
+
+  margin: 0;
+
+  padding: 0;
+
+  line-height: 1.5;
+
+}
+
+/* Estilos generales para los inputs */
+
+input {
+
+  font-family: 'Roboto', sans-serif;
+
+  font-size: 16px;
+
+  padding: 10px 12px;
+
+  border: none;
+
+  border-radius: 4px;
+
+  background-color: rgba(0, 0, 0, 0.09);
+
+  color: rgba(0, 0, 0, 0.87);
+
+  outline: none;
+
+  transition: background-color 0.3s ease;
+
+}
+
+ 
+
+/* Estilo para el label */
+
+input + label {
+
+  position: relative;
+
+  top: -60px;
+
+  left: 12px;
+
+  font-size: 16px;
+
+  color: rgba(0, 0, 0, 0.54);
+
+  pointer-events: none;
+
+  transition: all 0.3s ease;
+
+}
+
+ 
+
+/* Estilo para el label cuando el input tiene valor */
+
+input:not(:placeholder-shown) + label,
+
+input:focus + label {
+
+  top: -75px;
+
+  left: 8px;
+
+  font-size: 12px;
+
+  color: #3f51b5;
+
+}
+
+ 
+
+/* Estilo para el underline */
+
+input::after {
+
+  content: "";
+
+  display: block;
+
+  width: 100%;
+
+  height: 2px;
+
+  background-color: #3f51b5;
+
+  transform: scaleX(0);
+
+  transition: transform 0.3s ease;
+
+}
+
+ 
+
+/* Estilo para el underline cuando el input tiene foco */
+
+input:focus::after {
+
+  transform: scaleX(1);
+
+}
+
+ 
+
+.card {
+
+        margin: 10px;
+
+  width: 300px; /* Ajusta el ancho según tus necesidades */
+
+  background-color: #fff; /* Color de fondo */
+
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Sombra */
+
+  border-radius: 8px; /* Bordes redondeados */
+
+  overflow: hidden; /* Evita que el contenido desborde la tarjeta */
+
+}
+
+.material-button {
+
+  display: inline-flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  height: 36px;
+
+  padding: 0 16px;
+
+  border-radius: 4px;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.02857em;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
+  box-sizing: border-box;
+
+}
+
+ 
+
+.material-button--contained {
+
+  background-color: #3f51b5;
+
+  color: #fff;
+
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+}
+
+ 
+
+.material-button--contained:hover {
+
+  background-color: #303f9f;
+
+}
+
+ 
+
+.material-button--contained:active {
+
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.24), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+ 
+
+.material-button--outlined {
+
+  border: 1px solid #3f51b5;
+
+  color: #3f51b5;
+
+}
+
+ 
+
+.material-button--outlined:hover {
+
+  background-color: #e0e0e0;
+
+  color: #3f51b5;
+
+}
+
+ 
+
+.material-button--outlined:active {
+
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.24), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+ 
+
+.card-header {
+
+  padding: 5px;
+
+  background-color: #f1f1f1; /* Color de fondo del encabezado */
+
+}
+
+ 
+
+.todo-elancho{
+
+    width: 98%;
+
+}
+
+.bg-azul
+
+{
+
+    background-color: #adb9f3;  
+
+}
+
+.bg-amarillo{
+
+    background-color: hwb(56 31% 4%);
+
+}
+
+.card-body {
+
+  padding: 20px;
+
+}
+
+ 
+
+.card-footer {
+
+  padding: 20px;
+
+  background-color: #f1f1f1; /* Color de fondo del pie */
+
+}
+
+
+dialog {
+
+/*width: 350px;*/
+
+padding: 20px;
+
+background-color: #f9f9f9;
+
+border: 1px solid #ccc;
+
+border-radius: 5px;
+
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+}
+.img-container {
+text-align: center;
+}
+
+.mensajedealerta {
+padding: 20px;
+background-color: #f9f9f9;
+border: 3px solid #ccc;
+border-radius: 5px;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+position: center;
+top: 50%;
+left: 30%;
+transform: translate(-50%, -50%);
+z-index: 1000;
+display: none;
+}
+
+.alerta{
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+font-size: 3pc;
+font-weight: bold;
+color:#a20a0a;
+text-align: center;
+}
+
+
+    </style>
+
+</head>
+
+<body onload="cargarDatos()">
+
+    <div class="card todo-elancho">
+
+    <div class="card-header bg-azul ">
+
+        <h1>Agenda con clases</h1>
+
+    </div>
+
+    <div class="card-body">
+
+    <label for="Nombre">Nombre</label><br>
+
+    <input class="todo-elancho" type="text" id="Nombre" name="Nombre"><br>
+
+    <label for="Direccion">Dirección</label><br>
+
+    <input class="todo-elancho" type="text" id="Direccion"  name="Direccion"><br>
+
+    <label for="Telefono">Teléfono</label><br>
+
+    <input type="text" id="Telefono" name="Telefono"><br>
+
+    <label for="Correo">correo</label><br>
+
+    <input type="mail" id="Correo" name="Correo"><br>
+
+    <label for="Url">URL</label><br>
+
+    <input class="todo-elancho" type="text" id="Url" name="Url"><br>
+
+</div>
+
+
+<label for="inputBusqueda">Buscar en:</label>
+<select id="selectBusqueda">
+    <option value="nombre">Nombre</option>
+    <option value="direccion">Dirección</option>
+    <option value="telefono">Teléfono</option>
+    <option value="correo">Correo</option>
+</select>
+<input type="text" id="inputBusqueda">
+<button onclick="Buscar()">Buscar</button>
+
+<div class="card-footer">
+
+    <button onclick="Agregar()" class="material-button material-button--contained">Agregar</button>
+
+</div>
+
+</div>
+
+    <div id="listado"></div>
+
+    <dialog id="editar">
+
+        <div class="card">
+
+            <div class="card-header bg-amarillo">
+
+                <h1>Editar</h1>
+
+            </div>
+
+            <div class="card-body">
+
+                <label for="eNombre">Nombre</label><br>
+
+                <input class="todo-elancho" type="text" id="eNombre" name="eNombre"><br>
+
+                <label for="eDireccion">Dirección</label><br>
+
+                <input class="todo-elancho" type="text" id="eDireccion"  name="eDireccion"><br>
+
+                <label for="eTelefono">Teléfono</label><br>
+
+                <input type="text" id="eTelefono" name="eTelefono"><br>
+
+                <label for="eCorreo">correo</label><br>
+
+                <input type="mail" id="eCorreo" name="eCorreo"><br>
+
+                <label for="eUrl">URL</label><br>
+
+                <input class="todo-elancho" type="text" id="eUrl" name="eUrl"><br>
+
+                <p id="id" hidden></p>
+
+              </div>
+
+        </div>
+
+        <div class="card-footer">
+
+            <button onclick="guardarEditar()" class="material-button material-button--contained">Guardar</button>
+
+            <button onclick="this.closest('dialog').close()" class="material-button material-button--contained">Cancelar</button>
+
+        </div>
+
+       
+
+    </dialog>
+    <dialog id="borrar">
+
+        <div class="card">
+
+            <div class="card-header bg-amarillo">
+
+                <h1>borrar</h1>
+
+            </div>
+
+            <div class="card-body">
+
+                <label for="borrar">Quiere eliminar este contenido</label><br>
+
+                <p id="idborrar" ></p>
+
+              </div>
+
+        </div>
+
+        <div class="card-footer">
+
+            <button onclick="Eliminar()" class="material-button material-button--contained">si</button>
+
+            <button onclick="this.closest('dialog').close()" class="material-button material-button--contained">no</button>
+
+        </div>
+     
+    </dialog>
+  </dialog>
+
+  <dialog id="mensajeModal" class="mensajedealerta">
+    <div class="card">
+        <div class="card-header bg-azul">
+            <h1 class="alerta">¡Alerta!</h1>
+        </div>
+        <div class="card-body">
+            <p id="mensaje">Mucho ojo</p>
+        </div>
+        <div class="card-footer">
+            <button onclick="document.getElementById('mensajeModal').style.display = 'none'" class="material-button material-button--contained">Cerrar</button>
+        </div>
+    </div>
+</dialog>
+
+    <script>
+        class Contacto {
+    constructor(nombre, direccion, telefono, correo, url) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.correo = correo;
+        this.url = url;
+    }
+}
+
+// Opcionalmente, puedes agregar métodos adicionales a la clase Contacto, por ejemplo:
+// class Contacto {
+//     constructor(nombre, direccion, telefono, correo, url) {
+//         this.nombre = nombre;
+//         this.direccion = direccion;
+//         this.telefono = telefono;
+//         this.correo = correo;
+//         this.url = url;
+//     }
+
+//     obtenerNombreCompleto() {
+//         return this.nombre + ' ' + this.apellido;
+//     }
+// }
+
+
+let lista = [];
+
+// Funciones para interactuar con la lista de contactos
+
+    function guardarDatos() {
+            localStorage.setItem('lista', JSON.stringify(lista));
+    }
+
+    function cargarDatos() {
+        let datosGuardados = JSON.parse(localStorage.getItem('lista')) || [];
+        lista = datosGuardados.map(data => new Contacto(data.nombre, data.direccion, data.telefono, data.correo, data.url));
+        MostrarPersonas();
+    }
+
+    function guardarEditar() {
+        let id = parseInt(document.getElementById("id").innerHTML);
+        let Nombre = document.getElementById("eNombre").value;
+        let Direccion = document.getElementById("eDireccion").value;
+        let Telefono = document.getElementById("eTelefono").value;
+        let Correo = document.getElementById("eCorreo").value;
+        let Url = document.getElementById("eUrl").value;
+
+        lista[id].nombre = Nombre;
+        lista[id].direccion = Direccion;
+        lista[id].telefono = Telefono;
+        lista[id].correo = Correo;
+        lista[id].url = Url;
+
+        let editar = document.getElementById("editar");
+        editar.close();
+        guardarDatos();
+        MostrarPersonas();
+    }
+
+    function Editar(n) {
+        let contacto = lista[n];
+        let Nombre = document.getElementById("eNombre");
+        let Direccion = document.getElementById("eDireccion");
+        let Telefono = document.getElementById("eTelefono");
+        let Correo = document.getElementById("eCorreo");
+        let Url = document.getElementById("eUrl");
+        let id = document.getElementById("id");
+
+        id.innerHTML = n;
+        Nombre.value = contacto.nombre;
+        Direccion.value = contacto.direccion;
+        Telefono.value = contacto.telefono;
+        Correo.value = contacto.correo;
+        Url.value = contacto.url;
+
+        let editar = document.getElementById("editar");
+        editar.showModal();
+    }
+
+    function Borrar(n) {
+        let borrar = document.getElementById("borrar");
+        let idborrar = document.getElementById("idborrar");
+        idborrar.value = n;
+        borrar.showModal();
+    }
+
+    function Eliminar() {
+        let idborrar = parseInt(document.getElementById("idborrar").value);
+        lista.splice(idborrar, 1);
+        guardarDatos();
+        MostrarPersonas();
+        document.getElementById("borrar").close();
+    }
+
+    function MostrarPersonas() {
+        let listado = document.getElementById("listado");
+        let html = '<div style="display: flex; flex-wrap: wrap;">';
+        lista.forEach((contacto, index) => {
+            html += `<div class="card">`;
+            html += `<div class="card-header bg-amarillo"><h1>${contacto.nombre}</h1></div>`;
+            html += `<div class="card-body">`;
+            html += `<div class="img-container"><img src="${contacto.url}" alt="Fotografía" width="200px"></div>`;
+            html += `<p><b>Dirección</b><br>${contacto.direccion}</p>`;
+            html += `<p><b>Teléfono</b><br>${contacto.telefono}</p>`;
+            html += `<p><b>Correo</b><br>${contacto.correo}</p>`;
+            html += `</div>`;
+            html += `<div class="card-footer">`;
+            html += `<button onclick="Borrar(${index})" class="material-button material-button--outlined">Borrar</button>`;
+            html += `<button onclick="Editar(${index})" class="material-button material-button--outlined">Editar</button>`;
+            html += `</div></div>`;
+        });
+        html += `</div>`;
+        listado.innerHTML = html;
+    }
+
+    function Agregar() {
+        let Nombre = document.getElementById("Nombre").value;
+        let Direccion = document.getElementById("Direccion").value;
+        let Telefono = document.getElementById("Telefono").value;
+        let Correo = document.getElementById("Correo").value;
+        let Url = document.getElementById("Url").value;
+
+        let nuevoContacto = new Contacto(Nombre, Direccion, Telefono, Correo, Url);
+        lista.push(nuevoContacto);
+
+        document.getElementById("Nombre").value = "";
+        document.getElementById("Direccion").value = "";
+        document.getElementById("Telefono").value = "";
+        document.getElementById("Correo").value = "";
+        document.getElementById("Url").value = "";
+
+        guardarDatos();
+        MostrarPersonas();
+    }
+
+    function Buscar() {
+        let inputBusqueda = document.getElementById("inputBusqueda").value.toLowerCase();
+        let resultados = lista.filter(contacto => {
+            return (
+                contacto.nombre.toLowerCase().includes(inputBusqueda) ||
+                contacto.direccion.toLowerCase().includes(inputBusqueda) ||
+                contacto.telefono.toLowerCase().includes(inputBusqueda) ||
+                contacto.correo.toLowerCase().includes(inputBusqueda) ||
+                contacto.url.toLowerCase().includes(inputBusqueda)
+            );
+        });
+
+        if (resultados.length > 0) {
+            MostrarResultados(resultados);
+        } else {
+            MostrarMensajeModal("No se encontró ningún registro que coincida con los criterios de búsqueda.");
+        }
+    }
+
+    function MostrarResultados(resultados) {
+        let listado = document.getElementById("listado");
+        let html = '<div style="display: flex; flex-wrap: wrap;">';
+            resultados.forEach(contacto => {
+            let index = lista.indexOf(contacto); // Obtener el índice del contacto en la lista principal
+            html += `<div class="card">`;
+            html += `<div class="card-header bg-amarillo"><h1>${contacto.nombre}</h1></div>`;
+            html += `<div class="card-body">`;
+            html += `<div class="img-container"><img src="${contacto.url}" alt="Fotografía" width="200px"></div>`;
+            html += `<p><b>Dirección</b><br>${contacto.direccion}</p>`;
+            html += `<p><b>Teléfono</b><br>${contacto.telefono}</p>`;
+            html += `<p><b>Correo</b><br>${contacto.correo}</p>`;
+            html += `</div>`;
+            html += `<div class="card-footer">`;
+            html += `<button onclick="Borrar(${index})" class="material-button material-button--outlined">Borrar</button>`;
+            html += `<button onclick="Editar(${index})" class="material-button material-button--outlined">Editar</button>`;
+            html += `</div></div>`;
+         });
+        html += `</div>`;
+        listado.innerHTML = html;
+    }
+
+    function MostrarMensajeModal(mensaje) {
+        let modal = document.getElementById("mensajeModal");
+        let mensajeElemento = document.getElementById("mensaje");
+        mensajeElemento.textContent = mensaje;
+        modal.style.display = "block";
+    }
+
+ 
+
+</script>
+</body>
+
+</html>
